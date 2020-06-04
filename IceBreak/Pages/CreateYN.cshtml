@@ -1,0 +1,84 @@
+﻿@page
+@model IceBreak.Pages.CreateYNModel
+@{
+    ViewData["Title"] = "CreateYN";
+}
+
+<div class="container">
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-6">
+            <input type="button" id="createRoom" value="Create a Room" />
+            <input type="button" id="clearResult" value="歸零" />
+        </div>
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-6">
+        <ul id="messagesList"></ul>
+    </div>
+</div>
+<div class="row">
+    <div class="col-6" id="resultY">
+    </div>
+    <div class="col-6" id="resultN">
+    </div>
+</div>
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script>
+    var connection = new signalR.HubConnectionBuilder().withUrl("/ynHub").build();
+
+    //Disable send button until connection is established
+    document.getElementById("createRoom").disabled = true;
+    var myRoomId = '';
+    var yes = 0;
+    var no = 0;
+    connection.on("ReceiveYNRoomId", function (roomId) {
+        //if (myRoomId != '') {
+        //    return;
+        //}
+        var li = document.createElement("li");
+        li.textContent = roomId;
+        myRoomId = roomId;
+        document.getElementById("messagesList").appendChild(li);
+    });
+
+    connection.on("ReceiveYNResult", function (yn) {
+        //if (roomId != myRoomId) {
+        //    return;
+        //}
+        if (yn == 'Y') {
+            yes++;
+        } else if (yn == 'N') {
+            no++;
+        }
+        document.getElementById("resultY").innerHTML = yes;
+        document.getElementById("resultN").innerHTML = no;
+    });
+
+    connection.start().then(function () {
+        document.getElementById("createRoom").disabled = false;
+    }).catch(function (err) {
+        return console.error(err.toString());
+    });
+
+    document.getElementById("createRoom").addEventListener("click", function (event) {
+        connection.invoke("CreateYNRoom").catch(function (err) {
+            return console.error(err.toString());
+        });
+        document.getElementById("createRoom").disabled = true;
+        event.preventDefault();
+    });
+
+    document.getElementById("clearResult").addEventListener("click", function (event) {
+        connection.invoke("CleanYNResult", myRoomId.toString()).catch(function (err) {
+            return console.error(err.toString());
+        });
+        yes = 0;
+        no = 0;
+        document.getElementById("resultY").innerHTML = yes;
+        document.getElementById("resultN").innerHTML = no;
+        event.preventDefault();
+    });
+</script>

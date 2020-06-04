@@ -4,23 +4,50 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="container">
-    <div class="row">&nbsp;</div>
-    <div class="row">
-        <div class="col-2">User</div>
-        <div class="col-4"><input type="text" id="userInput" /></div>
-    </div>
-    <div class="row">
-        <div class="col-2">Message</div>
-        <div class="col-4"><input type="text" id="messageInput" /></div>
-    </div>
-    <div class="row">&nbsp;</div>
-    <div class="row">
-        <div class="col-6">
-            <input type="button" id="sendButton" value="Send Message" />
+    <div class="container">
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="col-2">User</div>
+            <div class="col-4"><input type="text" id="userInput" /></div>
+        </div>
+        <div class="row">
+            <div class="col-2">Message</div>
+            <div class="col-4"><input type="text" id="messageInput" /></div>
+        </div>
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="col-6">
+                <input type="button" id="sendButton" value="Send Message" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <input type="button" value="上廁所" onclick="addItem(this.value)" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <input type="button" value="電話響" onclick="addItem(this.value)" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <input type="button" value="小孩哭" onclick="addItem(this.value)" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <input type="button" value="水開了" onclick="addItem(this.value)" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <input type="button" value="郵差來了" onclick="addItem(this.value)" />
+            </div>
         </div>
     </div>
-</div>
 <div class="row">
     <div class="col-12">
         <hr />

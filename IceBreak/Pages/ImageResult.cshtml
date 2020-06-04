@@ -1,0 +1,17 @@
+﻿@page
+@model IceBreak.Pages.ImageResultModel
+@{
+    ViewData["Title"] = "ImageResult";
+    Layout = "";
+}
+
+<script type="text/javascript">
+
+    var query = {};
+    query["Success"] = '@(TempData["Success"])';
+    query["Message"] = '@(TempData["Message"])';
+    query["Url"] = '@(TempData["Url"])';
+   
+    var imageDialog = window.parent.document.getElementById(query['dialog_id']);
+    //console.log(imageDialog, window.parent.document, window.parent, query);
+</script>

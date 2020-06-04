@@ -53,6 +53,7 @@ namespace IceBreak
             {
                 endpoints.MapRazorPages();
                 endpoints.MapHub<ChatHub>("/chatHub");
+                endpoints.MapHub<YnHub>("/ynHub");
             });
         }
     }

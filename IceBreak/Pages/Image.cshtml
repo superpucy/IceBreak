@@ -1,0 +1,21 @@
+﻿@page
+@model IceBreak.Pages.ImageModel
+@{
+    ViewData["Title"] = "Image";
+    Layout = "";
+}
+
+
+<form target="upload-iframe"
+      enctype="multipart/form-data" 
+      method="post">
+    <dl>
+        <dd>
+            <input asp-for="FormFile" type="file" accept="image/*">
+        </dd>
+    </dl>
+
+    <input class="btn" type="submit" value="Upload" />
+
+</form>
+<iframe name="upload-iframe" style="display:none;" frameborder="0"></iframe>

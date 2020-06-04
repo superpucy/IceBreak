@@ -1,0 +1,61 @@
+﻿@page
+@model IceBreak.Pages.PlayYNModel
+@{
+    ViewData["Title"] = "PlayYN";
+}
+
+
+<div class="container">
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-6">
+            <input type="button" id="bottonY" value="Y" />
+            <input type="button" id="bottonN" value="N" />
+        </div>
+    </div>
+
+</div>
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script>
+    var myRoomId = '@TempData["roomId"]';
+    var connection = new signalR.HubConnectionBuilder().withUrl("/ynHub").build();
+    
+
+    //Disable send button until connection is established
+    document.getElementById("bottonY").disabled = true;
+    document.getElementById("bottonN").disabled = true;
+
+
+    connection.start().then(function () {
+        connection.invoke("JoinRoom", myRoomId).catch(function (err) {
+            return console.error(err.toString());
+        });
+        document.getElementById("bottonY").disabled = false;
+        document.getElementById("bottonN").disabled = false;
+    }).catch(function (err) {
+        return console.error(err.toString());
+    });
+
+    document.getElementById("bottonY").addEventListener("click", function (event) {
+        connection.invoke("SendYN", myRoomId,'Y').catch(function (err) {
+            return console.error(err.toString());
+        });
+        document.getElementById("bottonY").disabled = true;
+        document.getElementById("bottonN").disabled = true;
+        event.preventDefault();
+    });
+    document.getElementById("bottonN").addEventListener("click", function (event) {
+        connection.invoke("SendYN", myRoomId, 'N').catch(function (err) {
+            return console.error(err.toString());
+        });
+        document.getElementById("bottonY").disabled = true;
+        document.getElementById("bottonN").disabled = true;
+        event.preventDefault();
+    });
+
+    connection.on("ReceiveCleanYNResult", function () {
+        document.getElementById("bottonY").disabled = false;
+        document.getElementById("bottonN").disabled = false;
+    });
+
+</script>

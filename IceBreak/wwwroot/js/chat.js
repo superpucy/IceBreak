@@ -19,6 +19,12 @@ connection.start().then(function () {
     return console.error(err.toString());
 });
 
+function addItem(item) {
+    connection.invoke("SendMessage", item, '').catch(function (err) {
+        return console.error(err.toString());
+    });
+}
+
 document.getElementById("sendButton").addEventListener("click", function (event) {
     var user = document.getElementById("userInput").value;
     var message = document.getElementById("messageInput").value;
